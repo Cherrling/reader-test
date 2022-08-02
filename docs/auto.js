@@ -5,7 +5,7 @@ let basepath = "./"; //解析目录路径
 let filterFile = ["CNAME", "auto.js", "README.md", "_sidebar.md", "index.html", ".nojekyll", "autosidebar.js", "_sidebar.md.bak"]; //过滤文件名，使用，隔开
 let stopFloor = 10; //遍历层数
 let isFullPath = true; //是否输出完整路径
-let divide = ">目录"
+let divide = ">### 目录"
 
 function getPartPath(dirPath) {
     let base = basepath.split(/\/|\\/g);
@@ -49,7 +49,7 @@ function processDir(dirPath, dirTree = [], floor = 1) {
 
 function addlist(path, content) {
     var data = fs.readFileSync(path).toString().split(divide)[0]
-    data += divide + "\n\n"
+    data += divide + "\n>\n"
     data += content
     fs.writeFileSync(path, data)
 
@@ -59,17 +59,17 @@ function addlist(path, content) {
 let dirTree = [];
 dirTree = processDir(basepath, dirTree);
 let fileTree = '';
-
+var filepath
+var nextlist = new Array();
 
 function write(tree) {
     fileTree = ""
     let list = new Array();
     list.splice(0, list.length)
     list.length = 0
-    var path = ""
     for (let i = 0; i < tree.length; i++) {
         var filename = tree[i].name.split("/").slice(-1)
-        path = "./" + tree[i].name.replace(filename, "") + "README.md"
+        filepath = "./" + tree[i].name.replace(filename, "") + "README.md"
         var t = filename[0].split("-")
         let tem = new Array();
         tem.length = 0
@@ -81,23 +81,23 @@ function write(tree) {
 
     list.sort(function(a, b) { return a.num - b.num });
 
+    nextlist = []
 
-    const nextlist = new Array();
 
     list.forEach(ele => {
         if (ele.children) {
             nextlist.push(ele.children)
 
-            fileTree += "[" + ele.fname + "]" + "(" + "/" + ele.name + "/)" + "\n\n";
+            fileTree += ">[" + ele.fname + "]" + "(" + "/" + ele.name + "/)" + "\n>\n";
 
         } else {
 
-            fileTree += "[" + ele.fname + "]" + "(" + "/" + ele.name + ")" + "\n\n";
+            fileTree += ">[" + ele.fname + "]" + "(" + "/" + ele.name + ")" + "\n>\n";
 
         }
     });
-    addlist(path, fileTree)
-    console.log(path);
+    console.log(filepath);
+    addlist(filepath, fileTree)
     nextlist.forEach(ele => {
         write(ele)
     });
