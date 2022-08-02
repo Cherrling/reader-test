@@ -59,86 +59,49 @@ function addlist(path, content) {
 let dirTree = [];
 dirTree = processDir(basepath, dirTree);
 let fileTree = '';
-let filepath = 'README.md';
 
 
-
-function write(dirTree) {
-
+function write(tree) {
     fileTree = ""
+    let list = new Array();
+    list.splice(0, list.length)
+    list.length = 0
+    var path = ""
+    for (let i = 0; i < tree.length; i++) {
+        var filename = tree[i].name.split("/").slice(-1)
+        path = "./" + tree[i].name.replace(filename, "") + "README.md"
+        var t = filename[0].split("-")
+        let tem = new Array();
+        tem.length = 0
+        tem = tree[i]
+        tem.num = Number(t[0])
+        tem.fname = t[1].replace(".md", "")
+        list.push(tem)
+    }
 
-    dirTree.forEach(i => {
-        if (i.children) {
+    list.sort(function(a, b) { return a.num - b.num });
 
 
+    const nextlist = new Array();
 
+    list.forEach(ele => {
+        if (ele.children) {
+            nextlist.push(ele.children)
 
+            fileTree += "[" + ele.fname + "]" + "(" + "/" + ele.name + "/)" + "\n\n";
 
         } else {
-            fileTree += "[" + i.name + "]" + "(" + "/" + i.name + "/)" + "\n\n";
 
+            fileTree += "[" + ele.fname + "]" + "(" + "/" + ele.name + ")" + "\n\n";
 
         }
     });
-    filepath =
-        addlist(filepath, fileTree)
+    addlist(path, fileTree)
+    console.log(path);
+    nextlist.forEach(ele => {
+        write(ele)
+    });
 
 
 }
 write(dirTree)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// function consoleTree(tree, str = "* ", adder = "   ") {
-//     let list = new Array();
-//     list.splice(0, list.length)
-//     list.length = 0
-//     for (let i = 0; i < tree.length; i++) {
-//         var filename = tree[i].name.split("/").slice(-1)
-//         var t = filename[0].split("-")
-//         let tem = new Array();
-//         tem.length = 0
-//         tem = tree[i]
-//         tem.num = Number(t[0])
-//         tem.fname = t[1].replace(".md", "")
-//         list.push(tem)
-//     }
-
-//     list.sort(function(a, b) { return a.num - b.num });
-
-//     list.forEach(ele => {
-//         if (ele.fname == "ignore") {
-//             return
-//         }
-//         if (ele.children) {
-//             fileTree += str + "[" + ele.fname + "]" + "(" + "/" + ele.name + "/)" + "\n";
-//             consoleTree(
-//                 ele.children,
-//                 adder + str,
-//                 adder
-//             );
-//         } else {
-//             fileTree += str + "[" + ele.fname + "]" + "(" + "/" + ele.name + ")" + "\n";
-//         }
-//     });
-// }
-
-
-
-
-// consoleTree(dirTree);
-// writeTree(generatePath,fileTree);
-// console.log(fileTree)

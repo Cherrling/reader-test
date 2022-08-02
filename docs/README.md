@@ -9,7 +9,9 @@
 ---
 >目录
 
-[test.md](/test.md/)
+[一梦换须臾](/0-一梦换须臾/)
 
-[test2.md](/test2.md/)
+[test](/1-test.md)
+
+[test2](/2-test2.md)
 
