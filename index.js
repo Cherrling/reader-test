@@ -1,6 +1,12 @@
 $(document).ready(function() {
     var text
 
+    var list
+
+
+
+
+
     var path = "1.md"
 
 
