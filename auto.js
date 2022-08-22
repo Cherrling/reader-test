@@ -39,6 +39,9 @@ function processDir(dirPath, dirTree = [], floor = 1) {
         };
         if (!isFile) {
             dir.children = processDir(fullPath, [], floor + 1);
+            dir.isFile = false
+        } else {
+            dir.isFile = true
         }
         dirTree.push(dir);
     });
@@ -52,6 +55,9 @@ dirTree = processDir(basepath, dirTree);
 let list = new Array();
 list.length = 0
 
+
+
+
 function consoleTree(tree) {
 
 
@@ -61,7 +67,6 @@ function consoleTree(tree) {
 
         obj.num = Number(file[0])
         obj.name = file[1].replace('.md', '')
-            // list.push(obj)
         if (obj.children) {
             consoleTree(obj.children)
         }
@@ -72,22 +77,31 @@ function consoleTree(tree) {
 
 consoleTree(dirTree);
 
-
 fs.writeFileSync("./data.json", JSON.stringify(dirTree));
 
 
 
+// function consoleTree(tree) {
 
 
+//     tree.forEach(obj => {
+//         var filename = obj.filepath.split('/').slice(-1)
+//         var file = filename[0].split('-')
 
+//         obj.num = Number(file[0])
+//         obj.name = file[1].replace('.md', '')
+//         list.push(obj)
+//         if (obj.children) {
+//             consoleTree(obj.children)
+//         }
+//     });
 
-// function writeTree(filePath, content) {
-//     clearTxt(generatePath);
-//     fs.writeFileSync(filePath, `${content}`);
+//     list.sort(function(a, b) { return a.num - b.num });
 // }
 
-// function clearTxt(filePath) {
-//     fileTree = "";
-//     fs.writeFileSync(filePath, "");
-// }
-// writeTree(generatePath,fileTree);
+
+
+// consoleTree(dirTree);
+
+
+// fs.writeFileSync("./data.json", JSON.stringify(list));

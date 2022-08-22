@@ -1,5 +1,6 @@
 body {
     background-color: rgb(68, 68, 68);
+    transition-duration: 3s;
 }
 
 .nav {
@@ -50,4 +51,20 @@ a {
     margin-left: auto;
     text-align: center;
     margin-right: auto;
+}
+
+.hidden {
+    display: none;
+}
+
+#header {
+    font-size: 40px;
+    font-weight: 600;
+    color: rgb(233, 233, 233);
+}
+
+.menu-each {
+    font-size: 20px;
+    font-weight: 600;
+    color: rgb(233, 233, 233);
 }
