@@ -58,13 +58,32 @@ a {
 }
 
 #header {
-    font-size: 40px;
+    font-size: 35px;
     font-weight: 600;
     color: rgb(233, 233, 233);
+    margin-bottom: 40px;
+}
+
+#readme {
+    font-size: 20px;
+    font-weight: 600;
+    color: rgb(233, 233, 233);
+    top: 0px;
+    right: 0;
+    width: 50%;
+    padding-right: 10px;
+    background-color: transparent;
+    position: absolute;
+    display: inline;
 }
 
 .menu-each {
     font-size: 20px;
     font-weight: 600;
     color: rgb(233, 233, 233);
+}
+
+#menu-block {
+    width: 100%;
+    position: absolute;
 }

@@ -28,7 +28,7 @@ function fillin(path) {
         success: function(response) {
             text = marked(response)
             $("#content").html(text);
-            $('#header').slideUp(100, function() {
+            $('#header').fadeOut(100, function() {
                 $("#content-block").slideDown();
             });
         }
@@ -45,15 +45,64 @@ function filllist(children) {
         path = path.replace('docs', '#')
         html += "<div class='menu-each'>" + "<a href=" + path + ">" + obj.name + "</a> " + "</div>"
     });
-    $('#content-block').slideUp(200, function() {
-        $('#header').slideDown(200, function() {
-            $('#menu').slideUp(200, function() {
+    $('#content-block').fadeOut(200, function() {
+        $('#header').fadeIn(0, function() {
+            $('#menu').fadeOut(200, function() {
                 $('#menu').html(html);
-                $('#menu').slideDown(200);
+                $('#menu').fadeIn(200);
             });
         });
     });
 }
+
+function changenav(array) {
+    var nav = ''
+    var temlist = list
+    var t
+
+    if (array[0] != "") {
+        array.forEach(obj => {
+            obj = decodeURI(obj)
+            t = search(temlist, obj)
+            path = t.filepath
+            path = path.replace('docs', '#')
+            console.log(path);
+            nav += "<span class='nav'>></span>"
+            nav += "<span class='nav'>" + "<a href=" + path + ">" + t.name + "</a> " + "</span>"
+            if (!t.isFile) {
+                temlist = t.children
+            }
+        });
+    }
+
+    $('#span-block').fadeOut(100, function() {
+        $('#span-block').html(nav);
+        $('#span-block').fadeIn();
+    });
+
+
+}
+
+
+function readme(path, callback) {
+    var readme
+    $.ajax({
+        type: "GET",
+        url: path,
+        timeout: 1000,
+        success: function(response) {
+            readme = marked(response)
+            $('#readme').fadeOut(200, function() {
+                $('#readme').html(readme);
+                $('#readme').fadeIn();
+            });
+        }
+    });
+    callback()
+}
+
+
+
 
 $(document).ready(function() {
 
@@ -73,7 +122,9 @@ $(document).ready(function() {
         var herf = window.location.href.split('#').slice(-1).toString()
         herfarray = herf.split('/')
         herfarray.splice(0, 1)
+        changenav(herfarray)
         if (herfarray[0] == "") {
+            // readme('./docs/README.md')
             filllist(list)
         } else {
             var temlist = list
@@ -86,11 +137,15 @@ $(document).ready(function() {
                 }
             });
             if (t.isFile) {
-                $("#menu").slideUp(200, function() {
+                $('#readme').fadeOut();
+                $("#menu").fadeOut(100, function() {
                     fillin(t.filepath)
                 });
             } else {
-                filllist(t.children)
+                readme(t.filepath + "/README.md", function() {
+
+                    filllist(t.children)
+                })
             }
         }
     }
