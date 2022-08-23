@@ -35,6 +35,7 @@ function fillin(path) {
         success: function(response) {
             console.log(response);
             text = marked(response)
+            $("#content-block").slideDown();
         }
     });
     console.log(text);
@@ -98,9 +99,7 @@ $(document).ready(function() {
 
             if (t.isFile) {
                 $("#menu").slideUp(300, function() {
-
                     fillin(t.filepath)
-                    $("#content-block").slideDown();
                 });
             } else {
                 filllist(t.children)
