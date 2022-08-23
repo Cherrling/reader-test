@@ -62,11 +62,12 @@ function consoleTree(tree) {
 
 
     tree.forEach(obj => {
-        var filename = obj.filepath.split('/').slice(-1)
-        var file = filename[0].split('-')
+        var filename = obj.filepath.split('/').slice(-1)[0]
+        var file = filename.split('-')
 
         obj.num = Number(file[0])
         obj.name = file[1].replace('.md', '')
+        obj.fullname = filename
         if (obj.children) {
             consoleTree(obj.children)
         }
