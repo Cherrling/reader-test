@@ -11,6 +11,8 @@ function search(obj, name) {
 }
 var list
 
+window.location.href = '#/'
+
 $.ajax({
     type: "GET",
     url: "./data.json",
@@ -18,7 +20,7 @@ $.ajax({
     dataType: "",
     success: function(response) {
         list = response
-
+        filllist(list)
     }
 });
 
@@ -59,8 +61,12 @@ function filllist(children) {
 
 
 
+
+
+
 $(document).ready(function() {
     var text
+
 
 
 
@@ -108,10 +114,6 @@ $(document).ready(function() {
 
     }
 
-
-
-
-    filllist(list)
 
 
 });
