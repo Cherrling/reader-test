@@ -114,6 +114,7 @@ $(document).ready(function() {
         success: function(response) {
             list = response
             filllist(list)
+            readme('./docs/README.md')
         }
     });
 
@@ -124,7 +125,7 @@ $(document).ready(function() {
         herfarray.splice(0, 1)
         changenav(herfarray)
         if (herfarray[0] == "") {
-            // readme('./docs/README.md')
+            readme('./docs/README.md')
             filllist(list)
         } else {
             var temlist = list
