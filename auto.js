@@ -3,8 +3,7 @@ const path = require("path");
 const { stringify } = require("querystring");
 
 let basepath = "./docs"; //解析目录路径
-let filterFile = ["CNAME", "auto.js", "README.md", "_sidebar.md", "index.html", ".nojekyll", "autosidebar.js", "_sidebar.md.bak"]; //过滤文件名，使用，隔开
-let stopFloor = 10; //遍历层数
+let filterFile = ["CNAME", "auto.js", "README.md", "_sidebar.md", "index.html", ".nojekyll"]; //过滤文件名，使用，隔开
 let isFullPath = true; //是否输出完整路径
 
 function getPartPath(dirPath) {
